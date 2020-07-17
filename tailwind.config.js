@@ -2,10 +2,12 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        'regal-blue': '#243c5a',
+        'regal-blue': '#243c5a'
       }
     }
   },
-  variants: {},
+  variants: {
+    flex: ['responsive', 'odd', 'hover', 'focus']
+  },
   plugins: []
 }
