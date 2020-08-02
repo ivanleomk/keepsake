@@ -17,7 +17,7 @@ const LandingPageHeader = () => {
   }
 
   return (
-    <nav ref={ref} class='flex items-center justify-between flex-wrap bg-red-500 px-6 py-4'>
+    <nav ref={ref} class='flex items-center justify-between flex-wrap px-6 py-4' style={{ backgroundColor: '#842724' }}>
       <div
         onClick={() => history.push('/')}
         class='flex items-center flex-shrink-0 text-white mr-6 pt-2'

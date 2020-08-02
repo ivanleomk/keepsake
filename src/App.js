@@ -3,6 +3,7 @@ import Header from './components/Header'
 
 // Pages Imports
 import Main from './pages/Main'
+import Canvas from './pages/Canvas'
 
 import {
   BrowserRouter as Router,
@@ -17,7 +18,7 @@ class App extends Component {
         <div>
           <Switch>
             <Route exact path='/letter'>
-              Letter
+              <Canvas />
             </Route>
             <Route path='/*'>
               <Main />
