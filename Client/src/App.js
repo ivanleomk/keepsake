@@ -6,7 +6,7 @@ import Main from './pages/Main'
 import Canvas from './pages/Canvas'
 
 import {
-  BrowserRouter as Router,
+  HashRouter as Router,
   Switch,
   Route
 } from 'react-router-dom'
