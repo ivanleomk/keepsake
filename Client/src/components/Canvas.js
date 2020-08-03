@@ -63,26 +63,7 @@ function reducer (state, action) {
 
 function HomePage () {
   // Combined Shapes
-  const [items, dispatch] = useReducer(reducer, [
-    {
-      "type": "IMAGE",
-      "image": "/static/media/smiley.5ce9d575.png",
-      "id": "9467bef0-d592-11ea-800c-a3ad5dc180f8",
-      "width": 420,
-      "height": 460,
-      "x": 294.8080438756856,
-      "y": 482.62297848403875
-    },
-    {
-      "type": "TEXT",
-      "id": "16ebea90-d593-11ea-8742-351a13cee1f6",
-      "value": "I Love You",
-      "x": 227.77555899310892,
-      "y": 227.7755589931094,
-      "width": 411.96336978830266,
-      "height": 87.84891517351556
-    }
-  ])
+  const [items, dispatch] = useReducer(reducer, [])
 
   // Currently Selected ELement
   const [selectedId, selectShape] = useState(null)
