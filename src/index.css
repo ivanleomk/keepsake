@@ -17982,12 +17982,12 @@ video {
 
   #leftText{
     text-align: left;
-    margin-left: 20px;
+    margin-left: 60px;
   }
 
   #rightText{
     text-align: right;
-    margin-right:20px
+    margin-right:60px
   }
 }
 
@@ -18000,12 +18000,12 @@ video {
 
   #leftText{
     text-align: left;
-    margin-left: 40px;
+    margin-left: 90px;
   }
 
   #rightText{
     text-align: right;
-    margin-right:40px
+    margin-right:90px
   }
 }
 
