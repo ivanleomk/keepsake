@@ -2,13 +2,9 @@ import React from 'react'
 import { Text, Transformer } from 'react-konva'
 import useImage from 'use-image'
 
-const REMOVE_ITEM = 'REMOVE_ITEM'
-
-const TextField = ({ item, shapeProps, isSelected, onSelect, x,y,text, onChange, dispatch, selectedId }) => {
+const TextField = ({ item, shapeProps, isSelected, onSelect, x, y, text, onChange, dispatch, selectedId }) => {
   const shapeRef = React.useRef()
   const trRef = React.useRef()
-
-  
 
   React.useEffect(() => {
     if (isSelected) {
@@ -36,7 +32,7 @@ const TextField = ({ item, shapeProps, isSelected, onSelect, x,y,text, onChange,
               dispatch({ type: REMOVE_ITEM, payload: { id: selectedId } })
             }
           }
-          
+
           const element = e.target
           const textPosition = e.target.getAbsolutePosition()
           const parentLayer = e.target.parent
@@ -94,11 +90,9 @@ const TextField = ({ item, shapeProps, isSelected, onSelect, x,y,text, onChange,
               element.textArr[0].text = textarea.value
               textarea.remove()
               parentLayer.draw()
-              
             }
             if (e.keyCode === 27) {
               textarea.remove()
-              
             }
           })
         }}

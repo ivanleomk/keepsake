@@ -1,12 +1,11 @@
 import React, { useRef, useState } from 'react'
 import useOnClickOutside from '../hooks/useClickOutside'
 import { useHistory, useLocation } from 'react-router-dom'
-import Logo from '../assets/Postheart_Logo.png'
-import text from '../assets/Postheart_Logo Text Blue.png'
+import Logo from '../assets/Logo.svg'
 import RodalModal from '../components/RodalModal'
 
 // include styles
-import 'rodal/lib/rodal.css';
+import 'rodal/lib/rodal.css'
 
 const LandingPageHeader = () => {
   const ref = useRef()
@@ -27,8 +26,8 @@ const LandingPageHeader = () => {
         onClick={() => history.push('/')}
         class='flex items-center flex-shrink-0 text-white mr-6 pt-2'
       >
-        <img style={{ width:"40vw", maxWidth: "200px"}} src={Logo} alt="Logo" />
-        <img style={{ width:"40vw",maxWidth: "350px" }} src = {text} alt = "text" />
+        <img style={{ paddingLeft: '2vw', width: '30vw', maxWidth: '350px' }} src={Logo} alt='Logo' />
+
       </div>
       <div class='block lg:hidden'>
         <button onClick={() => setModalOpen(!isModalOpen)} class='flex items-center px-3 py-2 border rounded text-teal-200 border-teal-400 hover:text-white hover:border-white'>
@@ -36,7 +35,7 @@ const LandingPageHeader = () => {
         </button>
       </div>
       <RodalModal />
-      
+
     </nav>
   )
 }

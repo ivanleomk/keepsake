@@ -1,8 +1,7 @@
 import React, { useState, useRef, useReducer } from 'react'
 import { Stage, Layer } from 'react-konva'
-import Image from './Img'
 
-//Image Imports
+// Image Imports
 import groot from '../assets/groot.svg'
 import goodVibes from '../assets/goodVibes.svg'
 import cuteCat from '../assets/cuteCat.svg'
@@ -24,11 +23,12 @@ const UPDATE_TEXT_CONTENT = 'UPDATE_TEXT_CONTENT'
 function reducer (state, action) {
   switch (action.type) {
     case ADD_IMAGE: {
-      const { image, id,width,height,x,y } = action.payload
-      return state.concat({ type: 'IMAGE', image, id , width,height ,x,y})
+      const { image, id, width, height, x, y } = action.payload
+      return state.concat({ type: 'IMAGE', image, id, width, height, x, y })
     }
 
     case UPDATE_IMAGE: {
+      console.log('Updating!')
       const { x, y, width, height, id } = action.payload
       return state.map(item => item.id === id ? { ...item, x: x, y: y, width: width, height: height } : { ...item })
     }
@@ -67,9 +67,9 @@ function HomePage () {
 
   // Currently Selected ELement
   const [selectedId, selectShape] = useState(null)
-  console.log(items.filter(item => item.id===selectedId)[0])
+
   const [, updateState] = React.useState()
-  const [editing,setEditing] = React.useState(false)
+  const [editing, setEditing] = React.useState(false)
   const stageEl = React.createRef()
   const layerEl = React.createRef()
   const fileUploadEl = React.createRef()
@@ -82,7 +82,7 @@ function HomePage () {
 
   const addImage = (image) => {
     const id = uuidv1()
-    dispatch({ type: 'ADD_IMAGE', payload: { image, id ,width:50,height:50,x:100,y:100} })
+    dispatch({ type: 'ADD_IMAGE', payload: { image, id, width: 50, height: 50, x: 100, y: 100 } })
     selectShape(id)
   }
 
@@ -103,7 +103,6 @@ function HomePage () {
       reader.readAsDataURL(file)
     }
   }
-  console.log(items)
   const renderItems = (item) => {
     switch (item.type) {
       case 'IMAGE':
@@ -145,7 +144,7 @@ function HomePage () {
             item={item}
             text={item.value}
             x={item.x}
-            y = {item.y}
+            y={item.y}
             selectedId={selectedId}
             isSelected={item.id === selectedId}
             onSelect={() => {
@@ -173,35 +172,36 @@ function HomePage () {
   }
 
   return (
-    <div style = {{maxWidth:"1000px"}}>
+    <div style={{ maxWidth: '1000px' }}>
       <h1>Whiteboard</h1>
-      <div className="flex flex-row items-start justify-start">
-        <img  style={{width:"80px", height:"80px"}}className = "max-w-xs" src={groot} onClick={() => addImage(groot)} />
-        <img style={{ width: "80px", height:"80px" }} className="max-w-xs" src={goodVibes} onClick={() => addImage(goodVibes)} /> 
-        <img style={{ width: "80px", height: "80px" }} className="max-w-xs" src={cuteCat} onClick={() => addImage(cuteCat)} /> 
-        <img style={{ width: "80px", height: "80px" }} className="max-w-xs" src={alien} onClick={() => addImage(alien)} /> 
-        <img style={{ width: "80px", height: "80px" }} className="max-w-xs" src={smiley} onClick={() => addImage(smiley)} /> 
-        <img style={{ width: "80px", height: "80px" }} className="max-w-xs" src={bears} onClick={() => addImage(bears)} /> 
+      <div className='flex flex-row items-start justify-start'>
+        <img style={{ width: '80px', height: '80px' }} className='max-w-xs' src={groot} onClick={() => addImage(groot)} />
+        <img style={{ width: '80px', height: '80px' }} className='max-w-xs' src={goodVibes} onClick={() => addImage(goodVibes)} />
+        <img style={{ width: '80px', height: '80px' }} className='max-w-xs' src={cuteCat} onClick={() => addImage(cuteCat)} />
+        <img style={{ width: '80px', height: '80px' }} className='max-w-xs' src={alien} onClick={() => addImage(alien)} />
+        <img style={{ width: '80px', height: '80px' }} className='max-w-xs' src={smiley} onClick={() => addImage(smiley)} />
+        <img style={{ width: '80px', height: '80px' }} className='max-w-xs' src={bears} onClick={() => addImage(bears)} />
       </div>
-      
+
       <button onClick={() => drawImage()}>Upload Image</button>
-      
+
       <button onClick={() => dispatch({ type: ADD_TEXT, payload: { id: uuidv1() } })}>Add Text</button>
-      <div className = "bg-red-400 py-6">
-      {selectedId ? <button onClick={()=>dispatch({ type: REMOVE_ITEM, payload: { id: selectedId } })}>Delete Item</button> : <div></div>}
+      <div className='bg-red-400 py-6'>
+        {selectedId ? <button onClick={() => dispatch({ type: REMOVE_ITEM, payload: { id: selectedId } })}>Delete Item</button> : <div />}
       </div>
-      
+
       <input
         style={{ display: 'none' }}
         type='file'
         ref={fileUploadEl}
         onChange={fileChange}
       />
+
       <Stage
         width={1000}
         height={1000}
         ref={stageEl}
-        className = "border"
+        className='border'
         onMouseDown={e => {
           // deselect when clicked on empty area
           const clickedOnEmpty = e.target === e.target.getStage()
@@ -213,7 +213,7 @@ function HomePage () {
           console.log(e.key)
         }}
       >
-        <Layer  className = "border" ref={layerEl}>
+        <Layer className='border' ref={layerEl}>
           {items.map(item => renderItems(item))}
 
         </Layer>

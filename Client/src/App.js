@@ -4,6 +4,7 @@ import Header from './components/Header'
 // Pages Imports
 import Main from './pages/Main'
 import Canvas from './pages/Canvas'
+import User from './pages/User'
 
 import {
   HashRouter as Router,
@@ -19,6 +20,9 @@ class App extends Component {
           <Switch>
             <Route exact path='/letter'>
               <Canvas />
+            </Route>
+            <Route exact path='/user'>
+              <User />
             </Route>
             <Route path='/*'>
               <Main />

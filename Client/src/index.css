@@ -17973,6 +17973,16 @@ video {
           transition-delay: 1000ms;
 }
 
+.image-icon{
+  width: "10vw";
+  max-width: "40px";
+}
+
+.image-icon-large{
+  width: "10vw";
+  max-width: "60px";
+}
+
 @media only screen and (min-width: 600px) {
   #reverse{
     -webkit-box-orient: horizontal;

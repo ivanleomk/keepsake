@@ -18,25 +18,25 @@ const Hero = (props) => {
           className='outline-none bg-red-500 hover:bg-red-700 text-white font-bold rounded-full py-4 px-6 mt-4 '
         >Write A Letter
         </button>
-        <div style = {{paddingTop:"15vh"}}>
-        <button
-        onClick={() => {
-          setY({
-            y: explainRef.current.getBoundingClientRect().top,
-            reset: true,
-            from: { y: window.scrollY },
-            onFrame: props => window.scroll(0, props.y)
-          })
-        }}
-        style={{ outline: 'None' }} className='bg-transparent transition duration-500 ease-in-out transform hover:-translate-y-1 flex flex-col items-center justify-center '
-      >
+        <div style={{ paddingTop: '15vh' }}>
+          <button
+            onClick={() => {
+              setY({
+                y: explainRef.current.getBoundingClientRect().top,
+                reset: true,
+                from: { y: window.scrollY },
+                onFrame: props => window.scroll(0, props.y)
+              })
+            }}
+            style={{ outline: 'None' }} className='bg-transparent transition duration-500 ease-in-out transform hover:-translate-y-1 flex flex-col items-center justify-center '
+          >
       Find Out More
-        <img style={{ width: '50px' }} src={down} />
-        
+            <img style={{ width: '50px' }} src={down} />
+
           </button>
-          </div>
+        </div>
       </div>
-      
+
     </div>
 
   )
