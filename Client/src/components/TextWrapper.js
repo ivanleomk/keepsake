@@ -1,15 +1,14 @@
 import React from 'react'
-import { Text, Transformer } from 'react-konva';
-import { createTextArea,formatTextArea,saveInformation } from '../helperMethods';
-
+import { Text, Transformer } from 'react-konva'
+import { createTextArea, formatTextArea } from '../helperMethods'
 
 const TextWrapper = ({ item, selectShape, selected, dispatch, itemIndex, text }) => {
   // Item Properties
-  const { image, x, y, width, height, value,fontSize } = item
+  const { image, x, y, width, height, value, fontSize } = item
   const shapeRef = React.useRef()
   const trRef = React.useRef()
 
-  //TODO: Add react-textfit component to accurately compute size  
+  // TODO: Add react-textfit component to accurately compute size
   React.useEffect(() => {
     if (selected) {
       // we need to attach transformer manually
@@ -17,19 +16,20 @@ const TextWrapper = ({ item, selectShape, selected, dispatch, itemIndex, text })
       trRef.current.getLayer().batchDraw()
     }
   }, [selected])
-  //TODO: ADD A TEXT AREA to edit text
-    //TODO: Support Roation
-    //TODO: Add Line Drawing Support
+  // TODO: ADD A TEXT AREA to edit text
+  // TODO: Support Roation
+  // TODO: Add Line Drawing Support
   return (
     <>
       <Text
+        rotation={item.rotation}
         x={x}
         y={y}
         width={width}
         height={height}
         text={value}
-              ref={shapeRef}
-              fontSize = {fontSize}
+        ref={shapeRef}
+        fontSize={fontSize}
         onClick={() => selectShape(item.id)}
         onDragEnd={(e) => {
           dispatch({
@@ -38,9 +38,11 @@ const TextWrapper = ({ item, selectShape, selected, dispatch, itemIndex, text })
           })
         }}
         onDblClick={e => {
-          let textarea = createTextArea()
+          const element = e.target
+          const textarea = createTextArea()
           const parentLayer = e.target.parent
-          formatTextArea(e,textarea,item)
+          formatTextArea(e, textarea, item)
+
           setTimeout(() => {
             window.addEventListener('click', removeTextArea)
           })
@@ -50,18 +52,25 @@ const TextWrapper = ({ item, selectShape, selected, dispatch, itemIndex, text })
               textarea.remove()
             }
           }
-
-          textarea.addEventListener('keydown', function (e) {
-            if (e.keyCode === 13 && !e.shiftKey) {
-              dispatch({ type: 'UPDATE_TEXT_CONTENT', payload: { itemIndex,value:textarea.value } })
-
+          textarea.addEventListener('keydown',function(event){
+            console.log(event.keyCode)
+            if (event.keyCode === 13) {
+              const { id } = item
+              dispatch({
+                type: 'UPDATE_TEXT_CONTENT',
+                payload: {
+                  itemIndex,
+                  value: textarea.value
+                }
+              })
               textarea.remove()
-              parentLayer.draw()
+              e.target.parent.draw()
             }
-            if (e.keyCode === 27) {
+            if (event.keyCode === 27) {
               textarea.remove()
             }
           })
+          
         }}
         onTransformEnd={(e) => {
           const node = shapeRef.current
@@ -74,13 +83,15 @@ const TextWrapper = ({ item, selectShape, selected, dispatch, itemIndex, text })
             payload: {
               height: Math.max(node.height() * scaleY),
               width: Math.max(5, node.width() * scaleX),
-              itemIndex
+              itemIndex,
+              rotation:e.target.rotation()
             }
           })
         }}
         draggable
       />
-      {selected && <Transformer ref={trRef} />}
+      {selected && <Transformer 
+         ref={trRef} />}
     </>
   )
 }

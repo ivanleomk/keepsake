@@ -28,52 +28,43 @@ export const createTextArea = () => {
   return textarea
 }
 
-export const saveInformation = (e, dispatch, item,textarea) => {
-  
-  if (e.keycode === 13 && !e.shiftKey) {
-    const { id } = item
-    dispatch({
-      type: "UPDATE_TEXT_CONTENT",
-      payload: {
-        id,
-        value: textarea.value
-      }
-    })
-  }
-  
-}
-
-
 export const formatTextArea = (e, textarea, item) => {
-  //Format References
-  const element = e.target
+  const { x, y, width, height, fontSize, value } = item
+  console.log(item)
+
+  // Getting Constants
   const textPosition = e.target.getAbsolutePosition()
   const stageBox = e.target.parent.parent.container().getBoundingClientRect()
-
   var areaPosition = {
-    x: stageBox.left + textPosition.x,
-    y: stageBox.top + textPosition.y
+    x: stageBox.left + x,
+    y: stageBox.top + y
   }
-  
-  //Format Textarea
-  textarea.value = e.target.text()
+  // TODO: Add Rotation support for image
+
+  // TODO: Add a Line drawing ability
+  // Setting Attributes
   textarea.style.position = 'absolute'
   textarea.style.top = areaPosition.y + 'px'
   textarea.style.left = areaPosition.x + 'px'
-  textarea.value = e.target.text()
-  textarea.style.width = `${0.97*item.width}px`
-  textarea.style.height = `${0.97*item.height}px`
-  textarea.style.border = '1 px solid'
-  textarea.style.padding = '5px'
-  textarea.style.margin = '3px 3px'
-  textarea.style.overflow = 'hidden'
-  textarea.style.outline = 'none'
-  textarea.style.resize = 'none'
-  textarea.focus()
-  textarea.fontSize = `${item.fontSize}`
+  textarea.style.width = `${item.width}px`
+  textarea.value = item.value
+
+  textarea.style.height = `${item.height}px`
+  if (e.target.rotation()) {
+    const transform = `rotateZ(${e.target.rotation()}deg)`
+    textarea.style.transform = transform
+    textarea.style.top = `${areaPosition.y + 0.15 * item.height}px`
+    textarea.style.left = `${areaPosition.x - 0.015 * item.width}px`
+  }
+
+  // Styling Text Area
   textarea.style.lineHeight = e.target.lineHeight()
   textarea.style.fontFamily = e.target.fontFamily()
   textarea.style.transformOrigin = 'left top'
   textarea.style.textAlign = e.target.align()
   textarea.style.color = e.target.fill()
+  textarea.style.overflow = 'hidden'
+  textarea.style.outline = 'none'
+  textarea.style.resize = 'none'
+  textarea.focus()
 }

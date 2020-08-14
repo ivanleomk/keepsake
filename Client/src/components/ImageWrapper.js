@@ -43,7 +43,8 @@ const ImageWrapper = ({ item, selectShape, selected, dispatch, itemIndex }) => {
             payload: {
               height: Math.max(node.height() * scaleY),
               width: Math.max(5, node.width() * scaleX),
-              itemIndex
+              itemIndex,
+              rotation:e.target.rotation()
             }
           })
         }}

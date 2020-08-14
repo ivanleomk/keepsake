@@ -20,21 +20,32 @@ import { LINE_SELECTION, TEXT_SELECTION, IMAGE_SELECTION, ADD_TEXT } from '../ac
 // Helper Methods
 import { addImage, addText } from '../helperMethods'
 
-const Toolbar = ({ dispatch, selectShape }) => {
+const Toolbar = ({ dispatch, selectShape, setDrawing }) => {
   const [currentScreen, setCurrentScreen] = React.useState(null)
 
   return (
     <div className='flex flex-col items-center justify-center bg-red-400'>
       <div className='flex flex-row justify-between py-4' style={{ width: '40vw', maxWidth: '400px' }}>
-        <img onClick={() => setCurrentScreen(IMAGE_SELECTION)} style={{ width: '10vw', maxWidth: '40px' }} src={Image} />
+        <img onClick={() => {
+          setCurrentScreen(IMAGE_SELECTION)
+          setDrawing(false)
+        }
+        } style={{ width: '10vw', maxWidth: '40px' }} src={Image} />
         <img
           onClick={() => {
+            setDrawing(false)
             setCurrentScreen(TEXT_SELECTION)
             addText(dispatch, selectShape)
           }} style={{ width: '10vw', maxWidth: '40px' }} src={Text}
         />
-        <img onClick={() => setCurrentScreen(LINE_SELECTION)} style={{ width: '10vw', maxWidth: '40px' }} src={Brush} />
+        <img
+          onClick={() => {
+            setCurrentScreen(LINE_SELECTION)
+            setDrawing(true)
+          }} style={{ width: '10vw', maxWidth: '40px' }} src={Brush}
+        />
       </div>
+
       {currentScreen === IMAGE_SELECTION
         ? <div className='flex flex-row items-center py-2 overflow-x-auto' style={{ width: '60vw', maxWidth: '600px' }}>
           <img style={{ width: '10vw', maxWidth: '60px', margin: '0 20px' }} src={smiley} onClick={() => addImage(smiley, dispatch, selectShape)} />
