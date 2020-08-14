@@ -1,13 +1,15 @@
 import React from 'react'
 import { Text, Transformer } from 'react-konva';
-import {textfit} from 'textfit';
+import { createTextArea,formatTextArea,saveInformation } from '../helperMethods';
+
 
 const TextWrapper = ({ item, selectShape, selected, dispatch, itemIndex, text }) => {
   // Item Properties
   const { image, x, y, width, height, value,fontSize } = item
   const shapeRef = React.useRef()
   const trRef = React.useRef()
-  
+
+  //TODO: Add react-textfit component to accurately compute size  
   React.useEffect(() => {
     if (selected) {
       // we need to attach transformer manually
@@ -35,13 +37,38 @@ const TextWrapper = ({ item, selectShape, selected, dispatch, itemIndex, text })
             payload: { x: e.target.x(), y: e.target.y(), itemIndex }
           })
         }}
+        onDblClick={e => {
+          let textarea = createTextArea()
+          const parentLayer = e.target.parent
+          formatTextArea(e,textarea,item)
+          setTimeout(() => {
+            window.addEventListener('click', removeTextArea)
+          })
+
+          function removeTextArea (e) {
+            if (e.target !== textarea) {
+              textarea.remove()
+            }
+          }
+
+          textarea.addEventListener('keydown', function (e) {
+            if (e.keyCode === 13 && !e.shiftKey) {
+              dispatch({ type: 'UPDATE_TEXT_CONTENT', payload: { itemIndex,value:textarea.value } })
+
+              textarea.remove()
+              parentLayer.draw()
+            }
+            if (e.keyCode === 27) {
+              textarea.remove()
+            }
+          })
+        }}
         onTransformEnd={(e) => {
           const node = shapeRef.current
           const scaleX = node.scaleX()
           const scaleY = node.scaleY()
           node.scaleX(1)
-            node.scaleY(1)
-            console.log(e.target)
+          node.scaleY(1)
           dispatch({
             type: 'UPDATE_TEXT_DIMENSIONS',
             payload: {

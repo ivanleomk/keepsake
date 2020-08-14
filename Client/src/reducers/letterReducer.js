@@ -1,4 +1,4 @@
-import { ADD_IMAGE, UPDATE_IMAGE_DIMENSIONS, UPDATE_IMAGE_POSITION, ADD_TEXT, UPDATE_TEXT_POSITION,UPDATE_TEXT_DIMENSIONS } from '../actionTypes'
+import { ADD_IMAGE, UPDATE_IMAGE_DIMENSIONS, UPDATE_IMAGE_POSITION, ADD_TEXT, UPDATE_TEXT_POSITION,UPDATE_TEXT_DIMENSIONS,UPDATE_TEXT_CONTENT } from '../actionTypes'
 
 export function reducer (state, action) {
   switch (action.type) {
@@ -19,6 +19,15 @@ export function reducer (state, action) {
         itemIndex === mapIndex ? { ...item, x, y } : { ...item }
       )
     }
+    
+    case UPDATE_TEXT_CONTENT: {
+      
+      const { itemIndex, value } = action.payload
+      
+      return state.map((item, mapIndex) =>
+        itemIndex === mapIndex ? { ...item, value } : { ...item }
+      )
+    }
       
     case UPDATE_TEXT_DIMENSIONS: {
       const { height, width, itemIndex } = action.payload
@@ -27,6 +36,7 @@ export function reducer (state, action) {
         itemIndex === mapIndex ? { ...item, height, width,fontSize } : { ...item }
       )
     }
+    
 
     case UPDATE_IMAGE_POSITION: {
       const { x, y, itemIndex } = action.payload
