@@ -20,8 +20,44 @@ import { LINE_SELECTION, TEXT_SELECTION, IMAGE_SELECTION, ADD_TEXT } from '../ac
 // Helper Methods
 import { addImage, addText } from '../helperMethods'
 
-const Toolbar = ({ dispatch, selectShape, setDrawing }) => {
+const Toolbar = ({ dispatch, selectShape, setDrawing,items,selectedId }) => {
   const [currentScreen, setCurrentScreen] = React.useState(null)
+  let currItem = items.filter(item => item.id === selectedId)
+  
+  //Form-Specific State
+  const [strokeWidth,setWidth] = React.useState(5)
+  //TODO: Create Render Methods to update properties of individual components
+  //TODO: Create Serialization methods to store to JSON file online
+  //TODO: Create method to authenticate
+  //TODO: Create save 2 png method
+  
+  const renderItem = (item) => {
+    console.log(item)
+    switch (item[0].type) {
+      case 'LINE':
+        {return (
+          <div className='py-2 '>
+            <input type="range" min="1" max="10" value={strokeWidth} onChange={(e)=>setWidth(e.target.value)} class="slider" id="myRange"></input>
+          </div>
+        )
+        }
+      case 'IMAGE': {
+        return (
+          <div className='py-2 '>
+            Delete Image
+          </div>
+        )
+      }
+      case 'TEXT': {
+        console.log("Rendering Text!")
+        return (
+          <div className='py-2 '>
+            Set Text
+          </div>
+        )
+      }
+    }
+  }
 
   return (
     <div className='flex flex-col items-center justify-center bg-red-400'>
@@ -45,8 +81,8 @@ const Toolbar = ({ dispatch, selectShape, setDrawing }) => {
           }} style={{ width: '10vw', maxWidth: '40px' }} src={Brush}
         />
       </div>
-
-      {currentScreen === IMAGE_SELECTION
+      {selectedId && renderItem(currItem)}
+      {!selectedId && currentScreen === IMAGE_SELECTION
         ? <div className='flex flex-row items-center py-2 overflow-x-auto' style={{ width: '60vw', maxWidth: '600px' }}>
           <img style={{ width: '10vw', maxWidth: '60px', margin: '0 20px' }} src={smiley} onClick={() => addImage(smiley, dispatch, selectShape)} />
           <img style={{ width: '10vw', maxWidth: '60px', margin: '0 20px' }} src={groot} onClick={() => addImage(groot, dispatch, selectShape)} />
@@ -60,9 +96,9 @@ const Toolbar = ({ dispatch, selectShape, setDrawing }) => {
 
           </div>
         : null}
-      {currentScreen === TEXT_SELECTION
+      {!selectedId && currentScreen === TEXT_SELECTION
         ? <div className='py-2 '>No Text Selected</div> : null}
-      {currentScreen === LINE_SELECTION
+      {!selectedId && currentScreen === LINE_SELECTION
         ? <div className='py-2 '>No Line Selected</div> : null}
 
     </div>

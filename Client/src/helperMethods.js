@@ -39,9 +39,6 @@ export const formatTextArea = (e, textarea, item) => {
     x: stageBox.left + x,
     y: stageBox.top + y
   }
-  // TODO: Add Rotation support for image
-
-  // TODO: Add a Line drawing ability
   // Setting Attributes
   textarea.style.position = 'absolute'
   textarea.style.top = areaPosition.y + 'px'

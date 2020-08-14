@@ -89,7 +89,7 @@ const Letter = () => {
           {items.map((item, itemIndex) => <ComponentWrapper selectShape={selectShape} item={item} itemIndex={itemIndex} dispatch={dispatch} selectedId={selectedId} />)}
         </Layer>
       </Stage>
-      <Toolbar dispatch={dispatch} setDrawing={setDrawing} selectShape={selectShape} />
+      <Toolbar items={items} dispatch={dispatch} setDrawing={setDrawing} selectShape={selectShape} selectedId={selectedId} />
     </div>
   )
 }

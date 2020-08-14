@@ -8,7 +8,7 @@ const TextWrapper = ({ item, selectShape, selected, dispatch, itemIndex, text })
   const shapeRef = React.useRef()
   const trRef = React.useRef()
 
-  // TODO: Add react-textfit component to accurately compute size
+  
   React.useEffect(() => {
     if (selected) {
       // we need to attach transformer manually
@@ -16,9 +16,7 @@ const TextWrapper = ({ item, selectShape, selected, dispatch, itemIndex, text })
       trRef.current.getLayer().batchDraw()
     }
   }, [selected])
-  // TODO: ADD A TEXT AREA to edit text
-  // TODO: Support Roation
-  // TODO: Add Line Drawing Support
+  
   return (
     <>
       <Text
