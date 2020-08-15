@@ -1,4 +1,4 @@
-import { ADD_IMAGE, UPDATE_IMAGE_DIMENSIONS, UPDATE_IMAGE_POSITION, ADD_TEXT, UPDATE_TEXT_POSITION, UPDATE_TEXT_DIMENSIONS, UPDATE_TEXT_CONTENT, ADD_LINE, UPDATE_LINE_POINTS, DELETE_LINE } from '../actionTypes'
+import { ADD_IMAGE, UPDATE_IMAGE_DIMENSIONS, UPDATE_IMAGE_POSITION, ADD_TEXT, UPDATE_TEXT_POSITION, UPDATE_TEXT_DIMENSIONS, UPDATE_TEXT_CONTENT, ADD_LINE, UPDATE_LINE_POINTS, DELETE_LINE, UPDATE_LINE_COLOR, UPDATE_LINE_WIDTH, UPDATE_TEXT_FONT_FAMILY,UPDATE_TEXT_FONT_SIZE,DELETE_TEXT, DELETE_IMAGE } from '../actionTypes'
 
 export function reducer(state, action) {
   console.log(action)
@@ -10,7 +10,7 @@ export function reducer(state, action) {
 
     case ADD_TEXT: {
       const { id, width, height, x, y } = action.payload
-      return state.concat({ type: 'TEXT', id, value: 'Click to edit text', width, height, x, y, fontSize: 12,rotation:0 })
+      return state.concat({ type: 'TEXT', id, value: 'Click to edit text', width, height, x, y, fontSize: 12,rotation:0,fontFamily:"Roboto" })
     }
 
     case ADD_LINE: {
@@ -22,7 +22,9 @@ export function reducer(state, action) {
         maxx:-Infinity,
         miny:Infinity,
         minx:Infinity,
-        points
+        points,
+        strokeWidth: 5,
+        color: "#000000"
       })
     }
 
@@ -32,6 +34,20 @@ export function reducer(state, action) {
       return state.map((item, mapIndex) =>
         itemIndex === mapIndex ? { ...item, x, y } : { ...item }
       )
+    }
+      
+    case UPDATE_TEXT_FONT_FAMILY: {
+      const { fontFamily, id } = action.payload
+      return state.map((item, mapIndex) =>
+        item.id===id ? { ...item, fontFamily } : { ...item }
+      )
+    }
+      
+    case UPDATE_TEXT_FONT_SIZE: {
+      const { fontSize, id } = action.payload
+      return state.map((item, mapIndex) =>
+      item.id===id ? { ...item, fontSize } : { ...item }
+    )
     }
 
     case UPDATE_TEXT_CONTENT: {
@@ -60,8 +76,6 @@ export function reducer(state, action) {
 
     case UPDATE_IMAGE_DIMENSIONS: {
       const { height, width, itemIndex,rotation} = action.payload
-      console.log(`item index is ${itemIndex}`)
-      console.log(height, width)
       return state.map((item, mapIndex) =>
         itemIndex === mapIndex ? { ...item, height, width,rotation } : { ...item }
       )
@@ -85,13 +99,41 @@ export function reducer(state, action) {
         } : { ...item }
       )
     }
+    
+    case UPDATE_LINE_COLOR: {
+      const { id, color } = action.payload
+      return state.map((item, itemIndex) => item.id === id ? {
+        ...item, color
+      } : {...item}
+      )
+    }
+      
+    case UPDATE_LINE_WIDTH: {
+      const { id, strokeWidth } = action.payload
+      return state.map((item, itemIndex) => item.id === id ? {
+        ...item, strokeWidth
+      } : {...item}
+      )
+    }
 
     case DELETE_LINE: {
       const { id } = action.payload
+      console.log("deleting",id)
       return state.filter(item => item.id !== id)
+    }
+    
+    case DELETE_TEXT: {
+      const { id } = action.payload
+      return state.filter(item => item.id !== id)
+    }
+    
+    case DELETE_IMAGE: {
+      const { id } = action.payload
+      return state.filter(item=>item.id!==id)
     }
 
     default:
+      console.log("We defauled to this")
       return state
   }
 }

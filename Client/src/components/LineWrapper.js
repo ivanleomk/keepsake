@@ -25,8 +25,8 @@ const LineWrapper = ({ item, dispatch,selectShape,selected,itemIndex }) => {
         
         key={item.id}
         points={item.points}
-        stroke='black'
-        strokeWidth={5}
+        stroke={item.color}
+        strokeWidth={item.strokeWidth}
         draggable
         onDblClick={() => {
             console.log(item.maxx, item.maxy)

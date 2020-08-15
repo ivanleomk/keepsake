@@ -24,6 +24,7 @@ const Letter = () => {
   // React Refs
   const stageEl = React.createRef()
   const layerEl = React.createRef()
+  const backgroundRect = React.createRef()
 
   // Local State
   const [selectedId, selectShape] = useState(null)
@@ -45,9 +46,20 @@ const Letter = () => {
       setContainerWidth(newWidth)
     }
     , [height, width])
-  console.log(items)
+  
+  const handleDownload = (e) => {
+    let dataURL = stageEl.current.toDataURL({ pixelRatio: 3 })
+    let link = document.createElement('a')
+    link.download = 'letter.png'
+    link.href = dataURL
+    document.body.appendChild(link)
+    link.click()
+    document.body.removeChild(link);
+    
+  }
   return (
     <div style={{ height: '60vh' }}>
+      <button className="border" onClick={(e)=>handleDownload(e)}>Download as .png</button>
       <Stage
         ref={stageEl}
         width={containerWidth}
@@ -67,7 +79,7 @@ const Letter = () => {
             startDrawing(true)
             
           } else {
-            handleStageClick(e, selectShape)
+            handleStageClick(e, selectShape, backgroundRect.current)
           }
         }}
         onMouseMove={(e) => {
@@ -86,6 +98,7 @@ const Letter = () => {
         }}
       >
         <Layer>
+          <Rect ref = {backgroundRect} x = {0} y= {0}  width={containerWidth} height={containerHeight} fill = "white" />
           {items.map((item, itemIndex) => <ComponentWrapper selectShape={selectShape} item={item} itemIndex={itemIndex} dispatch={dispatch} selectedId={selectedId} />)}
         </Layer>
       </Stage>

@@ -28,6 +28,7 @@ const TextWrapper = ({ item, selectShape, selected, dispatch, itemIndex, text })
         text={value}
         ref={shapeRef}
         fontSize={fontSize}
+        fontFamily={item.fontFamily}
         onClick={() => selectShape(item.id)}
         onDragEnd={(e) => {
           dispatch({

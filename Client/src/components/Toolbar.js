@@ -8,6 +8,8 @@ import goodVibes from '../assets/goodVibes.svg'
 import cuteCat from '../assets/cuteCat.svg'
 import bears from '../assets/barebears.png'
 import alien from '../assets/alien.png'
+import Trash from '../assets/icons/trash.svg'
+
 
 // Icon Imports
 import Image from '../assets/icons/image.svg'
@@ -15,10 +17,15 @@ import Text from '../assets/icons/text.svg'
 import Brush from '../assets/icons/brush.svg'
 
 // Defined Action Types
-import { LINE_SELECTION, TEXT_SELECTION, IMAGE_SELECTION, ADD_TEXT } from '../actionTypes'
+import { LINE_SELECTION, TEXT_SELECTION, IMAGE_SELECTION, ADD_TEXT,DELETE_IMAGE } from '../actionTypes'
 
 // Helper Methods
 import { addImage, addText } from '../helperMethods'
+
+
+//Component Imports
+import LineForm from './LineForm'
+import TextForm from './TextForm';
 
 const Toolbar = ({ dispatch, selectShape, setDrawing,items,selectedId }) => {
   const [currentScreen, setCurrentScreen] = React.useState(null)
@@ -26,37 +33,40 @@ const Toolbar = ({ dispatch, selectShape, setDrawing,items,selectedId }) => {
   
   //Form-Specific State
   const [strokeWidth,setWidth] = React.useState(5)
-  //TODO: Create Render Methods to update properties of individual components
+  
   //TODO: Create Serialization methods to store to JSON file online
   //TODO: Create method to authenticate
-  //TODO: Create save 2 png method
+  
   
   const renderItem = (item) => {
-    console.log(item)
-    switch (item[0].type) {
-      case 'LINE':
-        {return (
-          <div className='py-2 '>
-            <input type="range" min="1" max="10" value={strokeWidth} onChange={(e)=>setWidth(e.target.value)} class="slider" id="myRange"></input>
-          </div>
-        )
+    if (item.length>0) {
+      switch (item[0].type) {
+        case 'LINE':
+          {return (
+            <LineForm selectShape={selectShape} item={item[0]} dispatch={dispatch}/>
+          )
+          }
+        case 'IMAGE': {
+          return (
+            <div className='py-2 '>
+              <img src={Trash} style={{ width: "30px" }} onClick={(e) => {
+                dispatch({ type: DELETE_IMAGE, payload: { id: item[0].id } })
+                selectShape(null)
+              }} />
+            </div>
+          )
         }
-      case 'IMAGE': {
-        return (
-          <div className='py-2 '>
-            Delete Image
-          </div>
-        )
-      }
-      case 'TEXT': {
-        console.log("Rendering Text!")
-        return (
-          <div className='py-2 '>
-            Set Text
-          </div>
-        )
-      }
+        case 'TEXT': {
+          return (
+            <TextForm selectShape={selectShape} item = {item[0]} dispatch={dispatch} />
+          )
+        }
+      }  
     }
+    else {
+      return null
+    }
+    
   }
 
   return (

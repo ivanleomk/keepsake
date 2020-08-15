@@ -16,8 +16,8 @@ export const addImage = (image, dispatch, selectShape) => {
   selectShape(id)
 }
 
-export const handleStageClick = (e, selectShape) => {
-  if (e.target === e.target.getStage()) {
+export const handleStageClick = (e, selectShape,rect) => {
+  if (e.target === e.target.getStage() || e.target === rect) {
     selectShape(null)
   }
 }
@@ -57,6 +57,7 @@ export const formatTextArea = (e, textarea, item) => {
   // Styling Text Area
   textarea.style.lineHeight = e.target.lineHeight()
   textarea.style.fontFamily = e.target.fontFamily()
+  textarea.style.fontSize = `${item.fontSize}px`
   textarea.style.transformOrigin = 'left top'
   textarea.style.textAlign = e.target.align()
   textarea.style.color = e.target.fill()
