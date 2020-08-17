@@ -5,6 +5,7 @@ import axios from 'axios'
 // include styles
 import 'rodal/lib/rodal.css'
 import SignupForm from './SignupForm'
+import { FacebookProvider, Like } from 'react-facebook'
 
 class RodalModal extends React.Component {
   constructor (props) {

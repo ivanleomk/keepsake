@@ -16,7 +16,7 @@ export const addImage = (image, dispatch, selectShape) => {
   selectShape(id)
 }
 
-export const handleStageClick = (e, selectShape,rect) => {
+export const handleStageClick = (e, selectShape, rect) => {
   if (e.target === e.target.getStage() || e.target === rect) {
     selectShape(null)
   }

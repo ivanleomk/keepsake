@@ -1,10 +1,13 @@
 import React, { Component } from 'react'
-import Header from './components/Header'
+
+// Component Imports
+import ProtectedRoute from './components/ProtectedRoute'
 
 // Pages Imports
 import Main from './pages/Main'
 import Canvas from './pages/Canvas'
 import User from './pages/User'
+import View from './pages/View'
 
 import {
   HashRouter as Router,
@@ -12,24 +15,37 @@ import {
   Route
 } from 'react-router-dom'
 
+// Context Import
+import RootProvider from './context/Auth'
+import { ToastProvider } from 'react-toast-notifications';
+
 class App extends Component {
-  render () {
+  render() {
     return (
-      <Router>
-        <div>
-          <Switch>
-            <Route exact path='/letter'>
-              <Canvas />
-            </Route>
-            <Route exact path='/user'>
-              <User />
-            </Route>
-            <Route path='/*'>
-              <Main />
-            </Route>
-          </Switch>
-        </div>
-      </Router>
+      <ToastProvider autoDismiss
+        autoDismissTimeout={3000}
+        placement="top-right">
+      <RootProvider>
+        <Router>
+          <div>
+            <Switch>
+              <Route exact path='/letter/:id'>
+                <Canvas />
+              </Route>
+              <ProtectedRoute exact path='/home'>
+                <User />
+                </ProtectedRoute>
+                <Route exact path='/view/:id'>
+                  <View />
+              </Route>
+              <Route path='/*'>
+                <Main />
+              </Route>
+            </Switch>
+          </div>
+        </Router>
+        </RootProvider>
+        </ToastProvider>
     )
   }
 }

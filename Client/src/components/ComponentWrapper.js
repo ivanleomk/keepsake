@@ -6,11 +6,12 @@ import ImageWrapper from './ImageWrapper'
 import TextWrapper from './TextWrapper'
 import LineWrapper from './LineWrapper'
 
-const ComponentWrapper = ({ item, itemIndex, selectShape, dispatch, selectedId }) => {
+const ComponentWrapper = ({ item, itemIndex, selectShape, dispatch, selectedId, edit }) => {
   switch (item.type) {
     case 'IMAGE': {
       return (
         <ImageWrapper
+          edit={edit}
           item={item}
           key={itemIndex}
           selectShape={selectShape}
@@ -23,6 +24,7 @@ const ComponentWrapper = ({ item, itemIndex, selectShape, dispatch, selectedId }
     case 'TEXT': {
       return (
         <TextWrapper
+          edit={edit}
           item={item}
           key={itemIndex}
           selectShape={selectShape}
@@ -37,6 +39,7 @@ const ComponentWrapper = ({ item, itemIndex, selectShape, dispatch, selectedId }
         <LineWrapper
           key={itemIndex}
           item={item}
+          edit={edit}
           selectShape={selectShape}
           selected={item.id === selectedId}
           itemIndex={itemIndex}

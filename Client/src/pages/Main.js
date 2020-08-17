@@ -34,10 +34,10 @@ const Main = () => {
 
   return (
     <>
-      <div style={{ backgroundColor: '#FFF8ED' }}>
+      <div >
         <LandingPageHeader />
         <Hero bg={HeroBg} title='Your Love Made Digital' subtext="We'll travel the distance for you" explainRef={explanation} />
-        <div style={{ backgroundColor: '#BFE3EB', width: '100vw', paddingTop: '30px' }} className='flex flex-col items-center justify-center mb-4'>
+        <div style={{width: '100vw', paddingTop: '30px' }} className='flex flex-col items-center justify-center mb-4'>
           <h1 className='text-3xl text-bold'>How It Works!</h1>
           <hr />
           <div ref={explanation} className='pictures'>

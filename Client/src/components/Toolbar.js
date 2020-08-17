@@ -8,8 +8,6 @@ import goodVibes from '../assets/goodVibes.svg'
 import cuteCat from '../assets/cuteCat.svg'
 import bears from '../assets/barebears.png'
 import alien from '../assets/alien.png'
-import Trash from '../assets/icons/trash.svg'
-
 
 // Icon Imports
 import Image from '../assets/icons/image.svg'
@@ -17,66 +15,55 @@ import Text from '../assets/icons/text.svg'
 import Brush from '../assets/icons/brush.svg'
 
 // Defined Action Types
-import { LINE_SELECTION, TEXT_SELECTION, IMAGE_SELECTION, ADD_TEXT,DELETE_IMAGE } from '../actionTypes'
+import { LINE_SELECTION, TEXT_SELECTION, IMAGE_SELECTION, ADD_TEXT } from '../actionTypes'
 
 // Helper Methods
 import { addImage, addText } from '../helperMethods'
 
-
-//Component Imports
+// Component Imports
 import LineForm from './LineForm'
-import TextForm from './TextForm';
+import TextForm from './TextForm'
 
-const Toolbar = ({ dispatch, selectShape, setDrawing,items,selectedId }) => {
+const Toolbar = ({ dispatch, selectShape, setDrawing, items, selectedId }) => {
   const [currentScreen, setCurrentScreen] = React.useState(null)
-  let currItem = items.filter(item => item.id === selectedId)
-  
-  //Form-Specific State
-  const [strokeWidth,setWidth] = React.useState(5)
-  
-  //TODO: Create Serialization methods to store to JSON file online
-  //TODO: Create method to authenticate
-  
-  
+  const currItem = items.filter(item => item.id === selectedId)
+
   const renderItem = (item) => {
-    if (item.length>0) {
+    if (item.length > 0) {
       switch (item[0].type) {
         case 'LINE':
-          {return (
-            <LineForm selectShape={selectShape} item={item[0]} dispatch={dispatch}/>
-          )
-          }
+        { return (
+          <LineForm item={item[0]} dispatch={dispatch} />
+        )
+        }
         case 'IMAGE': {
           return (
             <div className='py-2 '>
-              <img src={Trash} style={{ width: "30px" }} onClick={(e) => {
-                dispatch({ type: DELETE_IMAGE, payload: { id: item[0].id } })
-                selectShape(null)
-              }} />
+              Delete Image
             </div>
           )
         }
         case 'TEXT': {
+          console.log('Rendering Text!')
           return (
-            <TextForm selectShape={selectShape} item = {item[0]} dispatch={dispatch} />
+            <TextForm item={item[0]} dispatch={dispatch} />
           )
         }
-      }  
-    }
-    else {
+      }
+    } else {
       return null
     }
-    
   }
 
   return (
     <div className='flex flex-col items-center justify-center bg-red-400'>
       <div className='flex flex-row justify-between py-4' style={{ width: '40vw', maxWidth: '400px' }}>
-        <img onClick={() => {
-          setCurrentScreen(IMAGE_SELECTION)
-          setDrawing(false)
-        }
-        } style={{ width: '10vw', maxWidth: '40px' }} src={Image} />
+        <img
+          onClick={() => {
+            setCurrentScreen(IMAGE_SELECTION)
+            setDrawing(false)
+          }} style={{ width: '10vw', maxWidth: '40px' }} src={Image}
+        />
         <img
           onClick={() => {
             setDrawing(false)
